@@ -226,6 +226,9 @@ function onDownpayInput (e: Event) {
   const cursorFromEnd = el.value.length - (el.selectionEnd ?? el.value.length)
   const formatted = formatNumberInput(el.value)
   downpayInput.value = formatted
+  // Any user typing flips the input to "manual" mode — auto-sync from price stops.
+  // Clearing the field puts it back into "auto" mode so it follows price again.
+  downpayManual.value = formatted.length > 0
   nextTick(() => {
     const newPos = formatted.length - cursorFromEnd
     try { el.setSelectionRange(newPos, newPos) } catch { /* */ }
@@ -268,6 +271,25 @@ const dpPlaceholder = computed(() => {
 // when the input is focused or has any value (Vuetify-style behaviour).
 const isDownpayFocused = ref(false)
 const isDownpayFloating = computed(() => isDownpayFocused.value || downpayInput.value.length > 0)
+
+// Auto-sync down payment with 20% of price unless the user has typed something
+// custom. Editing the field flips this to true; clearing it flips back to false
+// (handled inside `onDownpayInput`), so the field starts following price again.
+// Exception: if the manually-typed value is below the new minimum after a price
+// change, we still bump it up to the minimum (and re-enable auto-sync) — there's
+// no point preserving an invalid value the calculator would reject anyway.
+const downpayManual = ref(false)
+watch(price, newPrice => {
+  const newMin = Math.round(newPrice * 0.20)
+  if (newPrice <= 0) {
+    if (!downpayManual.value) downpayInput.value = ''
+    return
+  }
+  if (!downpayManual.value || downpay.value < newMin) {
+    downpayInput.value = newMin.toLocaleString('ru-RU')
+    downpayManual.value = false
+  }
+})
 
 const total = computed(() => price.value * (1 + (ratePct.value ?? 0) / 100))
 const monthly = computed(() => {
