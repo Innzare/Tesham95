@@ -1,0 +1,50 @@
+/* Global Tesham styles — imported AFTER vuetify/styles so they win the cascade. */
+
+:root {
+  --gold: #C9A227;
+  --gold-l: #F0C940;
+  --gold-d: #8B6914;
+  --gold-p: #F5E199;
+  --blk: #060606;
+  --blk2: #0e0e0e;
+  --blk3: #161410;
+  --blk4: #1e1a10;
+  --txt: #faeec8;
+  --muted: #c4982e;
+  --dim: #7a6030;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--blk);
+}
+
+body {
+  background: var(--blk);
+  color: var(--txt);
+  font-family: 'Montserrat', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Soft golden glow at the top — exactly as on tesham95.netlify.app */
+body::after {
+  content: '';
+  position: fixed;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(201, 162, 39, .14) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}

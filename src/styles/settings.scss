@@ -1,0 +1,286 @@
+@use 'vuetify/settings' with (
+  $body-font-family: 'Roboto',
+  $border-radius-root: 8px,
+);
+
+// MizanPay brand palette
+$mp-primary: #047857;
+$mp-primary-light: #059669;
+$mp-primary-lighter: #10b981;
+$mp-secondary: #0f766e;
+$mp-accent: #34d399;
+$mp-bg: #fafdfb;
+$mp-bg-alt: #f0fdf4;
+$mp-dark: #0c1a12;
+$mp-dark-card: #132a1c;
+$mp-gold: #d97706;
+$mp-text: #1a2e23;
+$mp-text-muted: #5f7a6b;
+$mp-border: #d1e7db;
+
+:root {
+  --mp-primary: #{$mp-primary};
+  --mp-primary-light: #{$mp-primary-light};
+  --mp-secondary: #{$mp-secondary};
+  --mp-accent: #{$mp-accent};
+  --mp-bg: #{$mp-bg};
+  --mp-dark: #{$mp-dark};
+  --mp-gold: #{$mp-gold};
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  color: $mp-text;
+}
+
+.v-container {
+  max-width: 1200px !important;
+
+  @media (min-width: 1920px) {
+    max-width: 1400px !important;
+  }
+}
+
+// ============================================================
+// Gradients
+// ============================================================
+.bg-gradient-primary {
+  background: linear-gradient(135deg, $mp-primary 0%, #065f46 50%, #064e3b 100%);
+}
+
+.bg-gradient-light {
+  background: linear-gradient(180deg, $mp-bg-alt 0%, #ffffff 100%);
+}
+
+.bg-gradient-subtle {
+  background: linear-gradient(180deg, #ffffff 0%, $mp-bg 50%, #ffffff 100%);
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(160deg, $mp-dark 0%, #0a2818 40%, #0c1a12 100%);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, $mp-primary-light, $mp-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ============================================================
+// Section spacing
+// ============================================================
+.section-padding {
+  padding: 112px 0;
+
+  @media (max-width: 960px) {
+    padding: 64px 0;
+  }
+}
+
+// ============================================================
+// Animations
+// ============================================================
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-fade-in-up { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-scale-in { animation: scaleIn 0.5s ease-out forwards; }
+.animate-slide-left { animation: slideInLeft 0.6s ease-out forwards; }
+.animate-slide-right { animation: slideInRight 0.6s ease-out forwards; }
+
+@for $i from 1 through 10 {
+  .delay-#{$i} {
+    animation-delay: #{$i * 0.1}s;
+    opacity: 0;
+  }
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(4, 120, 87, 0.1) !important;
+  }
+}
+
+// ============================================================
+// Cards
+// ============================================================
+.feature-card {
+  border: 1px solid $mp-border;
+  background: #ffffff;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: rgba($mp-primary, 0.3);
+    box-shadow: 0 8px 32px rgba(4, 120, 87, 0.08);
+  }
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+// ============================================================
+// Components
+// ============================================================
+.icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $mp-bg-alt;
+
+  &.gold {
+    background: #fffbeb;
+  }
+
+  &.large {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+  }
+}
+
+.phone-mockup {
+  background: $mp-dark;
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 28px;
+    background: $mp-dark;
+    border-radius: 0 0 16px 16px;
+    z-index: 2;
+  }
+
+  .phone-screen {
+    border-radius: 30px;
+    overflow: hidden;
+    background: white;
+    aspect-ratio: 9 / 19.5;
+    width: 100%;
+  }
+}
+
+.step-number {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: $mp-primary;
+  letter-spacing: -0.03em;
+}
+
+// ============================================================
+// Section headers
+// ============================================================
+.section-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: $mp-bg-alt;
+  color: $mp-primary;
+  border: 1px solid rgba($mp-primary, 0.12);
+}
+
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $mp-text;
+
+  @media (min-width: 960px) {
+    font-size: 2.75rem;
+  }
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: $mp-text-muted;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+// ============================================================
+// Misc
+// ============================================================
+.text-muted-custom {
+  color: $mp-text-muted;
+}
+
+.border-subtle {
+  border-color: $mp-border !important;
+}
+
+// Smooth section transitions
+section {
+  position: relative;
+}
